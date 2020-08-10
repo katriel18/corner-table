@@ -37,7 +37,7 @@ double* vertexList;
 
 void readMeshFiles(){
  //ifstream fin("./meshes/mesh2.mesh");
- ifstream fin("src/meshes/mesh2.mesh");
+ ifstream fin("src/meshes/mesh3.mesh");
  //First Line OFF
  string name;
  //Second Line
@@ -138,7 +138,7 @@ int main( void ){
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); 	// Resizable option.
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(800, 800, "Lab 01.2 - Draw triangle", NULL, NULL);
+	window = glfwCreateWindow(600, 600, "Lab 01.2 - Draw triangle", NULL, NULL);
 
 	glfwMakeContextCurrent(window);
 
