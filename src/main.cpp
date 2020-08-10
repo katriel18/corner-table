@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : Program 1, Drawing one Point
-// Professor   : Herminio Paucar
+// Editado: Grupo de CGV
 // Description : Avance del trabajo grupal, configuraciones
 //============================================================================
 
