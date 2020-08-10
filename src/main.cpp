@@ -3,7 +3,7 @@
 // Professor   : Herminio Paucar
 // Description : Avance del trabajo grupal, configuraciones
 //============================================================================
-
+//NO MUESTRA NADA - PERO CARGA LOS DATOS A LA CORNER TABLE
 // Include standard headers
 #include <iostream>
 #include <stdio.h>
