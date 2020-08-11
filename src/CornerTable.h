@@ -51,8 +51,8 @@ public:
     CornerType getNumTriangles( ) const;
 
     /**
-     * Return the vertex list with the attributes of each vertex.
-     * @return - vertex list with the attributes of each vertex.
+     * Devuelve la lista de vértices con los atributos de cada vértice.
+     * @return - lista de vértices con los atributos de cada vértice.
      */
     double* getAttributes( ) const;
 
@@ -281,7 +281,7 @@ private:
     std::vector< CornerType > _vertexToCorner;
 
     /**
-     * The attributes vertex vector, or table G (geometry table).
+     *El vector de vértice de atributos, o tabla G (tabla de geometría).
      */
     std::vector<double> _attributes;
 
