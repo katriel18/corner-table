@@ -4,10 +4,13 @@
 // Description : Avance del trabajo grupal, configuraciones
 //============================================================================
 //guias  Lab 02 Primitives,lab4.0
+
 // Include standard headers
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+
+//NUEVAS LIBRERIAS
 #include <vector>
 #include "CornerTable.h"
 #include <fstream>
@@ -29,28 +32,26 @@ GLuint m_VBO;
 int dimVertices;
 int numberOfVertices;
 
-
-
-
+//NUEVAS VARIABLES
 CornerType numberTriangles;
 CornerType numberVertices ;
-
-CornerType* triangleList ;//almacena la pos del primer elemento
-
-double* vertexList;//almacena la psocion del primer elemento
-
+CornerType* triangleList ;//almacena la pos del primer elemento del array
+double* vertexList;//almacena la posicion del primer elemento del array
 CornerTable *CT;
+
+//DECALARACION DE METODOS
 void readMeshFiles();
 void init(double currentTime);
 void display(double currentTime);
 
+
+//CODIGO
 void readMeshFiles(){
- //ifstream fin("./meshes/mesh2.mesh");
+
  ifstream fin;
 
-
- fin.open("src/meshes/prueba.mesh",ios::in);
-
+ //ifstream fin("./meshes/mesh2.mesh");
+ fin.open("src/meshes/prueba3.mesh",ios::in);
 
  //First Line OFF
  string name;
@@ -60,12 +61,10 @@ void readMeshFiles(){
  int var0;
 
  if (fin.fail()){
-
 	 cout<<"error del archivo"<<endl;
 	 exit(1);
  }else{
 
- // while(!fin.eof()){
 		 fin>>name;
 		 fin>>npoint>>ntriangle>>var3;
 		 /* Llenamos la lista de puntos */
@@ -89,13 +88,9 @@ void readMeshFiles(){
   }
  fin.close();
 
-
-
-
  int numberCoordinatesByVertex = 3;
- CornerTable *ct =new CornerTable(triangleList, vertexList, numberTriangles, numberVertices, numberCoordinatesByVertex );
- //cout<<"# triangulos: "<<ct->getNumTriangles()<<endl;
- //cout<<"# verstices: "<<ct->getNumberVertices()<<endl;
+ CornerTable* ct =new CornerTable(triangleList, vertexList, numberTriangles, numberVertices, numberCoordinatesByVertex );
+
  CT = ct;
 
 
@@ -122,7 +117,7 @@ void init(double currentTime){
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferData( // LLEVA LOS VERTICES A LA MEMORIA DE TRABAJO
 			GL_ARRAY_BUFFER,
-			10*3*sizeof(double),
+			6*3*sizeof(double),
 			(void*)CT->getAttributes(),	//m_Vertices,
 			GL_STATIC_DRAW
 	);
@@ -131,9 +126,6 @@ void init(double currentTime){
 }
 
 void display(double currentTime) {
-
-
-
 
 	// Clear the screen
 	// Dark blue background
@@ -152,11 +144,11 @@ void display(double currentTime) {
 			0,                  // stride , VA A TOMAR SALTO O TOMA DE UNO EN UNO,
 			(void*) 0            // array buffer offset
 	);
-	//glEnableVertexAttribArray(0);
+
 	// Draw the triangle !
-	//glBindVertexArray(m_VAO);
 	glPointSize(20.0f);
-	glDrawArrays( GL_LINE_LOOP, 0, 10); // 3 indices starting at 0 -> 1 triangle
+	//GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
+	glDrawArrays( GL_TRIANGLES, 0, 6); // 3 indices starting at 0 -> 1 triangle
 	glDisableVertexAttribArray(0);
 }
 
@@ -192,17 +184,18 @@ int main( void ){
 	readMeshFiles();
 	init(glfwGetTime());
 
+	/*
+	 //cout<<"# triangulos: "<<CT->getNumTriangles()<<endl;
+	 //cout<<"# vertices: "<<CT->getNumberVertices()<<endl;
 
-	 //	cout<<"# triangulos: "<<CT->getNumTriangles()<<endl;
-	 	//cout<<"# vertices: "<<CT->getNumberVertices()<<endl;
+		cout<<"printTriangleList: "<<endl;
+		double* a=CT->getAttributes() ;//guardamos el primer lugar del vector
 
-	cout<<"printTriangleList: "<<endl;
-	double* a=CT->getAttributes() ;//guardamos el primer lugar del vector
+	 	 for (int i = 0; i < 14; i++){
 
-	 for (int i = 0; i < 14; i++){
-
-		cout<<*a++<<endl;
-		 }
+			cout<<*a++<<endl;
+		}
+	*/
 
 
 	// Check if the window was closed
