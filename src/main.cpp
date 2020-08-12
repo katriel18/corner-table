@@ -3,7 +3,7 @@
 // Editado: Grupo de CGV
 // Description : Avance del trabajo grupal, configuraciones
 //============================================================================
-//guias  Lab 02 Primitives,lab4.0
+//GUIAS  Lab02, lab04.0, Lab04.2
 
 // Include standard headers
 #include <iostream>
@@ -117,10 +117,24 @@ void init(double currentTime){
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferData( // LLEVA LOS VERTICES A LA MEMORIA DE TRABAJO
 			GL_ARRAY_BUFFER,
-			6*3*sizeof(double),
+			4*3*sizeof(double),
 			(void*)CT->getAttributes(),	//m_Vertices,
 			GL_STATIC_DRAW
 	);
+
+	// Create an element array
+	   GLuint m_EBO;
+	    glGenBuffers(1, &m_EBO);
+	  /*  GLuint elements[] = {
+	        0, 1, 2,
+	        2, 1, 3
+	    };*/
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+		glBufferData(
+				GL_ELEMENT_ARRAY_BUFFER,
+				2*3*sizeof(/*elements*/CornerType),
+				(void*)CT->getTriangleList(),//elements,
+				GL_STATIC_DRAW);
 
 
 }
@@ -138,7 +152,7 @@ void display(double currentTime) {
 
 	glVertexAttribPointer(
 			0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
+			3,                  // size (tamaño por linea)
 			GL_DOUBLE,           // type
 			GL_FALSE,           // normalized?
 			0,                  // stride , VA A TOMAR SALTO O TOMA DE UNO EN UNO,
@@ -148,9 +162,14 @@ void display(double currentTime) {
 	// Draw the triangle !
 	glPointSize(20.0f);
 	//GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
-	glDrawArrays( GL_TRIANGLES, 0, 6); // 3 indices starting at 0 -> 1 triangle
+	//glDrawArrays( GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
+
+	// Draw a rectangle from the 2 triangles using 6 indices
+	glDrawElements(GL_TRIANGLES, 6,GL_UNSIGNED_INT, 0);
+
 	glDisableVertexAttribArray(0);
 }
+
 
 
 
