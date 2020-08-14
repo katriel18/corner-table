@@ -36,16 +36,18 @@ CornerType numberVertices ;
 CornerType* triangleList ;//almacena la pos del primer elemento del array
 double* vertexList;//almacena la posicion del primer elemento del array
 CornerTable *CT;
+
 //DECALARACION DE METODOS
 void readMeshFiles();
-
+void init (GLFWwindow* window);
+void display(GLFWwindow* window, double currentTime);
 //CODIGO
 void readMeshFiles(){
 
  ifstream fin;
 
  //ifstream fin("./meshes/mesh2.mesh");
- fin.open("src/meshes/prueba01.mesh",ios::in);
+ fin.open("src/meshes/prueba02.mesh",ios::in);
 
  //First Line OFF
  string name;
@@ -111,7 +113,7 @@ void init (GLFWwindow* window) {
 	// Copia esses dados pra essa área de memoria
 	glBufferData(
 			GL_ARRAY_BUFFER,	// TARGET associado ao nosso buffer
-			5*3*sizeof(double),//20 * sizeof(GLfloat),	// tamanho do buffer
+			3*CT->getNumberVertices()*sizeof(double),//20 * sizeof(GLfloat),	// tamanho do buffer
 			(void*)CT->getAttributes(),	//m_Vertices,			// Dados a serem copiados pra GPU
 			GL_STATIC_DRAW);		// Política de acesso aos dados, para otimização
 
@@ -125,7 +127,7 @@ void init (GLFWwindow* window) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(
 			GL_ELEMENT_ARRAY_BUFFER,
-			3*3*sizeof(CornerType),//sizeof(elements),
+			CT->getNumTriangles()*3*sizeof(CornerType),//sizeof(elements),
 			(void*)CT->getTriangleList(),//elements,
 			GL_STATIC_DRAW);
 
@@ -161,7 +163,7 @@ void display(GLFWwindow* window, double currentTime) {
 
     //GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
    glPointSize(30.0f);
-   glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+   glDrawElements(GL_POINTS, CT->getNumTriangles()*3, GL_UNSIGNED_INT, 0);
 
 }
 
