@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : Corner Table
-// Guias 	   : Lab04.2
+// Guias 	   : Lab03 , Lab04.2
 //============================================================================
 
 // Include standard headers
@@ -111,7 +111,7 @@ void init (GLFWwindow* window) {
 	// Copia esses dados pra essa área de memoria
 	glBufferData(
 			GL_ARRAY_BUFFER,	// TARGET associado ao nosso buffer
-			4*3*sizeof(double),//20 * sizeof(GLfloat),	// tamanho do buffer
+			5*3*sizeof(double),//20 * sizeof(GLfloat),	// tamanho do buffer
 			(void*)CT->getAttributes(),	//m_Vertices,			// Dados a serem copiados pra GPU
 			GL_STATIC_DRAW);		// Política de acesso aos dados, para otimização
 
@@ -125,7 +125,7 @@ void init (GLFWwindow* window) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(
 			GL_ELEMENT_ARRAY_BUFFER,
-			2*3*sizeof(CornerType),//sizeof(elements),
+			3*3*sizeof(CornerType),//sizeof(elements),
 			(void*)CT->getTriangleList(),//elements,
 			GL_STATIC_DRAW);
 
@@ -160,10 +160,8 @@ void display(GLFWwindow* window, double currentTime) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     //GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
-    //glDrawArrays( GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
-
-    // Draw a rectangle from the 2 triangles using 6 indices
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+   glPointSize(30.0f);
+   glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 
 }
 
