@@ -47,7 +47,7 @@ void readMeshFiles(){
  ifstream fin;
 
  //ifstream fin("./meshes/mesh2.mesh");
- fin.open("src/meshes/prueba02.mesh",ios::in);
+ fin.open("src/meshes/prueba03.mesh",ios::in);
 
  //First Line OFF
  string name;
