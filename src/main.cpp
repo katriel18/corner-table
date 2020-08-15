@@ -46,8 +46,8 @@ void readMeshFiles(){
 
  ifstream fin;
 
- //ifstream fin("./meshes/mesh2.mesh");
- fin.open("src/meshes/prueba03.mesh",ios::in);
+ fin.open("src/meshes/mesh26.mesh",ios::in);
+ //fin.open("src/meshes/prueba03.mesh",ios::in);
 
  //First Line OFF
  string name;
@@ -67,7 +67,19 @@ void readMeshFiles(){
 		 vertexList= new double[3*npoint];
 
 		 for (int i = 0; i < npoint; i++){
-			fin>>vertexList[3*i]>>vertexList[3*i+1]>>vertexList[3*i+2];
+
+			 double a=0.0,b=0.0,c=0.0;
+
+			 fin>>a>>b>>c;
+
+			 cout<<"puntos "<<i+1<<": "<<endl;
+			 cout<<a<<" "<<b<<" "<<c<<'\n';
+
+			 vertexList[3*i]=a/2;
+						vertexList[3*i+1]=b/2;
+								   vertexList[3*i+2]=c/2;
+
+			//fin>>vertexList[3*i]>>vertexList[3*i+1]>>vertexList[3*i+2];
 			//cout<<vertexList[3*i]<<" "<<vertexList[3*i+1]<<" "<<vertexList[3*i+2] <<'\n';
 		 }
 
@@ -162,7 +174,7 @@ void display(GLFWwindow* window, double currentTime) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     //GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
-   glPointSize(30.0f);
+   glPointSize(2.0f);
    glDrawElements(GL_POINTS, CT->getNumTriangles()*3, GL_UNSIGNED_INT, 0);
 
 }
@@ -177,7 +189,7 @@ int main(void) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            //
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); 	// Resizable option.
 
-    GLFWwindow* window = glfwCreateWindow(600,600, "Corner Table", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1200,600, "Corner Table", NULL, NULL);
     glfwMakeContextCurrent(window);
     if (glewInit() != GLEW_OK) {
     	exit(EXIT_FAILURE);
