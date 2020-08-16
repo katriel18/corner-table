@@ -26,7 +26,7 @@ GLfloat* m_Vertices;
 using namespace std;
 
 //NUEVAS LIBRERIAS
-#include <vector>
+//#include <vector>
 #include "CornerTable.h"
 #include <fstream>
 #include "DefinitionTypes.h"
@@ -37,10 +37,15 @@ CornerType* triangleList ;//almacena la pos del primer elemento del array
 double* vertexList;//almacena la posicion del primer elemento del array
 CornerTable *CT;
 
+
+
 //DECALARACION DE METODOS
 void readMeshFiles();
 void init (GLFWwindow* window);
 void display(GLFWwindow* window, double currentTime);
+
+
+
 //CODIGO
 void readMeshFiles(){
 
@@ -80,7 +85,7 @@ void readMeshFiles(){
 								   vertexList[3*i+2]=c/2;
 
 			//fin>>vertexList[3*i]>>vertexList[3*i+1]>>vertexList[3*i+2];
-			//cout<<vertexList[3*i]<<" "<<vertexList[3*i+1]<<" "<<vertexList[3*i+2] <<'\n';
+
 		 }
 
 		 numberTriangles= ntriangle;
@@ -154,6 +159,9 @@ void init (GLFWwindow* window) {
 			0,//5 * sizeof(GLfloat),
 			(void*) 0 //0
 			);
+
+
+
 /*
 	GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
 	glEnableVertexAttribArray(colAttrib);
@@ -173,9 +181,11 @@ void display(GLFWwindow* window, double currentTime) {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+
+
     //GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
    glPointSize(2.0f);
-   glDrawElements(GL_POINTS, CT->getNumTriangles()*3, GL_UNSIGNED_INT, 0);
+   glDrawElements(GL_TRIANGLES, CT->getNumTriangles()*3, GL_UNSIGNED_INT, 0);
 
 }
 
