@@ -51,7 +51,7 @@ void readMeshFiles(){
 
  ifstream fin;
 
- fin.open("src/meshes/mesh26.mesh",ios::in);
+ fin.open("src/meshes/mesh3.mesh",ios::in);
  //fin.open("src/meshes/prueba03.mesh",ios::in);
 
  //First Line OFF
@@ -77,8 +77,8 @@ void readMeshFiles(){
 
 			 fin>>a>>b>>c;
 
-			 cout<<"puntos "<<i+1<<": "<<endl;
-			 cout<<a<<" "<<b<<" "<<c<<'\n';
+			 //cout<<"puntos "<<i+1<<": "<<endl;
+			 //cout<<a<<" "<<b<<" "<<c<<'\n';
 
 			 vertexList[3*i]=a/2;
 						vertexList[3*i+1]=b/2;
@@ -105,6 +105,55 @@ void readMeshFiles(){
  CornerTable* ct =new CornerTable(triangleList, vertexList, numberTriangles, numberVertices, numberCoordinatesByVertex );
 
  CT = ct;
+ 	 cout<<"Num Triangles"<<ct->getNumTriangles()<<endl;
+ /*	 for(int i=0;i<ct->getNumTriangles()*3;i++){
+ 		 cout<<"TRIANGLE: "<<ct->cornerTriangle(i)<<" Vert: "<<ct->cornerToVertexIndex(i);
+ 		 cout<<" CORNER: "<<i<<" Previus: "<<ct->cornerPrevious(i);
+ 		 cout<<" Next: "<<ct->cornerNext(i);
+ 		cout<<" Opuesto: "<<ct->cornerOpposite(i)<<endl;
+ 			 cout<<"T IZQ: "<<ct->cornerTriangle(ct->cornerRight(i));
+ 			cout<<" T DER: "<<ct->cornerTriangle(ct->cornerLeft(i))<<endl;
+ 			cout<<endl;
+ 	 }
+ 	 cout<<"_________________________"<<endl;
+ 	 */
+ 	 ct->printTriangleList();
+
+ 	int matrizTriangle[ct->getNumTriangles()][ct->getNumTriangles()];
+ 	 for (int m = 0; m < ct->getNumTriangles(); m++){
+ 	 	        for (int j = 0; j < ct->getNumTriangles(); j++)
+ 	 	        {
+ 	 	        	matrizTriangle[m][j] =  0;
+ 	 	        }
+ 	 	   }
+
+
+
+ for(int i=0;i<ct->getNumTriangles()*3;i++){
+ 		CornerType  triangleRigth =ct->cornerTriangle(ct->cornerRight(i));
+ 		if( triangleRigth <=ct->getNumTriangles()){
+ 			cout<<"T "<<ct->cornerTriangle(i)<< "Tizq"<<triangleRigth<<endl;
+ 			matrizTriangle[ct->cornerTriangle(i)][triangleRigth]=1;
+ 			//matrizTriangle[triangleRigth][ct->cornerTriangle(i)]=1;
+ 		}
+ 	}
+
+
+ 	 cout<<"::::::::::::::::::::::::::::::::::::::::::::::::::"<<endl;
+
+
+ 	 cout<<"::::::::::::::::::::::::::::::::::::::::::::::::::"<<endl;
+ 		 for (int i = 0; i < ct->getNumTriangles(); i++){
+ 	 	        for (int j = 0; j < ct->getNumTriangles(); j++)
+ 	 	        {
+ 	 	            cout<<matrizTriangle[i][j]<<" ";
+
+ 	 	        }
+ 	 	        cout<<endl;
+ 	 	    }
+
+
+
 
 }
 
@@ -134,13 +183,9 @@ void init (GLFWwindow* window) {
 			(void*)CT->getAttributes(),	//m_Vertices,			// Dados a serem copiados pra GPU
 			GL_STATIC_DRAW);		// Política de acesso aos dados, para otimização
 
-    // Create an element array
+
     GLuint m_EBO;
     glGenBuffers(1, &m_EBO);
-   /* GLuint elements[] = {
-        0, 1, 2,
-        2, 3, 0
-    };*/
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(
 			GL_ELEMENT_ARRAY_BUFFER,
