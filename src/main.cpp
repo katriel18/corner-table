@@ -43,11 +43,11 @@ CornerTable *CT;
 void readMeshFiles();
 void init (GLFWwindow* window);
 void display(GLFWwindow* window, double currentTime);
-
-
+void matrizAdyacencia();
 
 //CODIGO
 void readMeshFiles(){
+
 
  ifstream fin;
 
@@ -105,53 +105,58 @@ void readMeshFiles(){
  CornerTable* ct =new CornerTable(triangleList, vertexList, numberTriangles, numberVertices, numberCoordinatesByVertex );
 
  CT = ct;
- 	 cout<<"Num Triangles"<<ct->getNumTriangles()<<endl;
- /*	 for(int i=0;i<ct->getNumTriangles()*3;i++){
- 		 cout<<"TRIANGLE: "<<ct->cornerTriangle(i)<<" Vert: "<<ct->cornerToVertexIndex(i);
- 		 cout<<" CORNER: "<<i<<" Previus: "<<ct->cornerPrevious(i);
- 		 cout<<" Next: "<<ct->cornerNext(i);
- 		cout<<" Opuesto: "<<ct->cornerOpposite(i)<<endl;
- 			 cout<<"T IZQ: "<<ct->cornerTriangle(ct->cornerRight(i));
- 			cout<<" T DER: "<<ct->cornerTriangle(ct->cornerLeft(i))<<endl;
- 			cout<<endl;
- 	 }
- 	 cout<<"_________________________"<<endl;
- 	 */
- 	 ct->printTriangleList();
-
- 	int matrizTriangle[ct->getNumTriangles()][ct->getNumTriangles()];
- 	 for (int m = 0; m < ct->getNumTriangles(); m++){
- 	 	        for (int j = 0; j < ct->getNumTriangles(); j++)
- 	 	        {
- 	 	        	matrizTriangle[m][j] =  0;
- 	 	        }
- 	 	   }
 
 
-
- for(int i=0;i<ct->getNumTriangles()*3;i++){
- 		CornerType  triangleRigth =ct->cornerTriangle(ct->cornerRight(i));
- 		if( triangleRigth <=ct->getNumTriangles()){
- 			cout<<"T "<<ct->cornerTriangle(i)<< "Tizq"<<triangleRigth<<endl;
- 			matrizTriangle[ct->cornerTriangle(i)][triangleRigth]=1;
- 			//matrizTriangle[triangleRigth][ct->cornerTriangle(i)]=1;
- 		}
- 	}
+}
+void matrizAdyacencia(){
 
 
- 	 cout<<"::::::::::::::::::::::::::::::::::::::::::::::::::"<<endl;
+	cout<<"Num Triangles"<<CT->getNumTriangles()<<endl;
+	 /*	 for(int i=0;i<ct->getNumTriangles()*3;i++){
+	 		 cout<<"TRIANGLE: "<<ct->cornerTriangle(i)<<" Vert: "<<ct->cornerToVertexIndex(i);
+	 		 cout<<" CORNER: "<<i<<" Previus: "<<ct->cornerPrevious(i);
+	 		 cout<<" Next: "<<ct->cornerNext(i);
+	 		cout<<" Opuesto: "<<ct->cornerOpposite(i)<<endl;
+	 			 cout<<"T IZQ: "<<ct->cornerTriangle(ct->cornerRight(i));
+	 			cout<<" T DER: "<<ct->cornerTriangle(ct->cornerLeft(i))<<endl;
+	 			cout<<endl;
+	 	 }
+	 	 cout<<"_________________________"<<endl;
+	 	 */
+	CT->printTriangleList();
+
+	 	int matrizTriangle[CT->getNumTriangles()][CT->getNumTriangles()];
+	 	 for (unsigned int m = 0; m < CT->getNumTriangles(); m++){
+	 	 	        for (unsigned int j = 0; j < CT->getNumTriangles(); j++)
+	 	 	        {
+	 	 	        	matrizTriangle[m][j] =  0;
+	 	 	        }
+	 	 	   }
 
 
- 	 cout<<"::::::::::::::::::::::::::::::::::::::::::::::::::"<<endl;
- 		 for (int i = 0; i < ct->getNumTriangles(); i++){
- 	 	        for (int j = 0; j < ct->getNumTriangles(); j++)
- 	 	        {
- 	 	            cout<<matrizTriangle[i][j]<<" ";
 
- 	 	        }
- 	 	        cout<<endl;
- 	 	    }
+	 for(unsigned int i=0;i<CT->getNumTriangles()*3;i++){
+	 		CornerType  triangleRigth =CT->cornerTriangle(CT->cornerRight(i));
+	 		if( triangleRigth <=CT->getNumTriangles()){
+	 			cout<<"T "<<CT->cornerTriangle(i)<< "Tizq"<<triangleRigth<<endl;
+	 			matrizTriangle[CT->cornerTriangle(i)][triangleRigth]=1;
+	 			//matrizTriangle[triangleRigth][ct->cornerTriangle(i)]=1;
+	 		}
+	 	}
 
+
+	 	 cout<<"::::::::::::::::::::::::::::::::::::::::::::::::::"<<endl;
+
+
+	 	 cout<<"::::::::::::::::::::::::::::::::::::::::::::::::::"<<endl;
+	 		 for (unsigned int i = 0; i < CT->getNumTriangles(); i++){
+	 	 	        for (unsigned int j = 0; j < CT->getNumTriangles(); j++)
+	 	 	        {
+	 	 	            cout<<matrizTriangle[i][j]<<" ";
+
+	 	 	        }
+	 	 	        cout<<endl;
+	 	 	    }
 
 
 
@@ -252,6 +257,7 @@ int main(void) {
     glfwSwapInterval(1);
 
     readMeshFiles();
+    matrizAdyacencia();
 
     init(window);
 
