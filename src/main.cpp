@@ -51,7 +51,7 @@ void readMeshFiles(){
 
  ifstream fin;
 
- fin.open("src/meshes/mesh3.mesh",ios::in);
+ fin.open("src/meshes/mesh2.mesh",ios::in);
  //fin.open("src/meshes/prueba03.mesh",ios::in);
 
  //First Line OFF
@@ -154,17 +154,6 @@ void init (GLFWwindow* window) {
 
 
 
-	// Specify the layout of the vertex data
-	GLint posAttrib = glGetAttribLocation(renderingProgram, "iPosition");
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(
-			posAttrib,
-			3,//2,
-			GL_DOUBLE,//GL_FLOAT,
-			GL_FALSE,
-			0,//5 * sizeof(GLfloat),
-			(void*) 0 //0
-			);
 
 
 
@@ -185,17 +174,50 @@ void init (GLFWwindow* window) {
 //////////////////////	color ///////////////////////
 
 
-		/*
 
-GLuint m_VAO_2;
+			GLuint m_VAO_2;
 		    glGenVertexArrays(1, &m_VAO_2);
 		    glBindVertexArray(m_VAO_2);
 
 		    // Create a Vertex Buffer Object and copy the vertex data to it
 		    GLuint m_VBO_2;
 		    glGenBuffers(1, &m_VBO_2);
-			*m_Vertices = new GLfloat[3]{
-		        1.0f,  0.0f, 0.0f
+			m_Vertices = new GLfloat[99]{
+		        1.0f,  0.0f, 0.0f,
+				1.0f,  0.0f, 0.0f,
+				1.0f,  0.0f, 0.0f,
+				0.0f,  1.0f, 0.0f,
+				0.0f,  1.0f, 0.0f,
+				0.0f,  1.0f, 0.0f,
+				0.0f,  0.0f, 1.0f,
+				0.0f,  0.0f, 1.0f,
+				0.0f,  0.0f, 1.0f,
+
+								1.0f,  0.0f, 0.0f,
+								1.0f,  0.0f, 0.0f,
+							1.0f,  0.0f, 0.0f,
+								0.0f,  1.0f, 0.0f,
+								0.0f,  1.0f, 0.0f,
+								0.0f,  1.0f, 0.0f,
+								0.0f,  0.0f, 1.0f,
+								0.0f,  0.0f, 1.0f,
+								0.0f,  0.0f, 1.0f,
+																1.0f,  0.0f, 0.0f,
+																1.0f,  0.0f, 0.0f,
+																1.0f,  0.0f, 0.0f,
+																0.0f,  1.0f, 0.0f,
+																0.0f,  1.0f, 0.0f,
+																0.0f,  1.0f, 0.0f,
+																0.0f,  0.0f, 1.0f,
+																0.0f,  0.0f, 1.0f,
+																0.0f,  0.0f, 1.0f,
+																								1.0f,  0.0f, 0.0f,
+																								1.0f,  0.0f, 0.0f,
+																								1.0f,  0.0f, 0.0f,
+																								0.0f,  1.0f, 0.0f,
+																								0.0f,  1.0f, 0.0f,
+																								0.0f,  1.0f, 0.0f,
+
 			};
 
 
@@ -210,6 +232,21 @@ GLuint m_VAO_2;
 			);// Política de acesso aos dados, para otimização
 
 
+
+			// Specify the layout of the vertex data
+			GLint posAttrib = glGetAttribLocation(renderingProgram, "iPosition");
+			glEnableVertexAttribArray(posAttrib);
+			glVertexAttribPointer(
+					posAttrib,
+					3,//2,
+					GL_DOUBLE,//GL_FLOAT,
+					GL_FALSE,
+					0,//5 * sizeof(GLfloat),
+					0//(void*) 0 //0 //sirve con los dos
+					);
+
+
+
  GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
 			glEnableVertexAttribArray(colAttrib);
 			glVertexAttribPointer(
@@ -217,14 +254,18 @@ GLuint m_VAO_2;
 					3,
 					GL_FLOAT,
 					GL_FALSE,
-					3 * sizeof(GLfloat),
+					3 * sizeof(GLfloat),//0
 					0
 					);
 
-					*/
+
+
+
+
+
 
 	//fragment-> outColor = vec4(oColor, 1.0);
-
+			//outColor = vec4(0.0,1.0,0.0, 1.0);
 }
 
 
@@ -240,8 +281,8 @@ void display(GLFWwindow* window, double currentTime) {
 
 
     //GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
-   glPointSize(2.0f);
-   glDrawElements(GL_TRIANGLES, CT->getNumTriangles()*3, GL_UNSIGNED_INT, 0);
+   glPointSize(20.0f);
+   glDrawElements(GL_POINTS, CT->getNumTriangles()*3, GL_UNSIGNED_INT, 0);
 
 }
 
