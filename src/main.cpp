@@ -51,7 +51,7 @@ void readMeshFiles(){
 
  ifstream fin;
 
- fin.open("src/meshes/mesh26.mesh",ios::in);
+ fin.open("src/meshes/mesh3.mesh",ios::in);
  //fin.open("src/meshes/prueba03.mesh",ios::in);
 
  //First Line OFF
@@ -119,7 +119,7 @@ void init (GLFWwindow* window) {
     // Create a Vertex Buffer Object and copy the vertex data to it
     GLuint m_VBO;
     glGenBuffers(1, &m_VBO);
-	/*m_Vertices = new GLfloat[20] {
+	/**m_Vertices = new GLfloat[20] {
         -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
          0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
          0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
@@ -132,7 +132,8 @@ void init (GLFWwindow* window) {
 			GL_ARRAY_BUFFER,	// TARGET associado ao nosso buffer
 			3*CT->getNumberVertices()*sizeof(double),//20 * sizeof(GLfloat),	// tamanho do buffer
 			(void*)CT->getAttributes(),	//m_Vertices,			// Dados a serem copiados pra GPU
-			GL_STATIC_DRAW);		// Política de acesso aos dados, para otimização
+			GL_STATIC_DRAW
+	);// Política de acesso aos dados, para otimização
 
     // Create an element array
     GLuint m_EBO;
@@ -146,7 +147,12 @@ void init (GLFWwindow* window) {
 			GL_ELEMENT_ARRAY_BUFFER,
 			CT->getNumTriangles()*3*sizeof(CornerType),//sizeof(elements),
 			(void*)CT->getTriangleList(),//elements,
-			GL_STATIC_DRAW);
+			GL_STATIC_DRAW
+	);
+
+
+
+
 
 	// Specify the layout of the vertex data
 	GLint posAttrib = glGetAttribLocation(renderingProgram, "iPosition");
@@ -162,6 +168,8 @@ void init (GLFWwindow* window) {
 
 
 
+
+
 /*
 	GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
 	glEnableVertexAttribArray(colAttrib);
@@ -172,7 +180,55 @@ void init (GLFWwindow* window) {
 			GL_FALSE,
 			5 * sizeof(GLfloat),
 			(void*) (2 * sizeof(GLfloat)));*/
+
+
+//////////////////////	color ///////////////////////
+
+
+		/*
+
+GLuint m_VAO_2;
+		    glGenVertexArrays(1, &m_VAO_2);
+		    glBindVertexArray(m_VAO_2);
+
+		    // Create a Vertex Buffer Object and copy the vertex data to it
+		    GLuint m_VBO_2;
+		    glGenBuffers(1, &m_VBO_2);
+			*m_Vertices = new GLfloat[3]{
+		        1.0f,  0.0f, 0.0f
+			};
+
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_VBO_2);
+			// Reserva memoria na GPU para um TARGET receber dados
+			// Copia esses dados pra essa área de memoria
+			glBufferData(
+					GL_ARRAY_BUFFER,	// TARGET associado ao nosso buffer
+					99 * sizeof(GLfloat),	// tamanho do buffer
+					m_Vertices,			// Dados a serem copiados pra GPU
+					GL_STATIC_DRAW
+			);// Política de acesso aos dados, para otimização
+
+
+ GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
+			glEnableVertexAttribArray(colAttrib);
+			glVertexAttribPointer(
+					colAttrib,
+					3,
+					GL_FLOAT,
+					GL_FALSE,
+					3 * sizeof(GLfloat),
+					0
+					);
+
+					*/
+
+	//fragment-> outColor = vec4(oColor, 1.0);
+
 }
+
+
+
 
 void display(GLFWwindow* window, double currentTime) {
     glUseProgram(renderingProgram);
