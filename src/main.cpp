@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include <iostream>
 
+//libreria para aleatorios
+#include <time.h>//////////////////////////////////
+
 // Include GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -51,8 +54,7 @@ void readMeshFiles(){
 
  ifstream fin;
 
- fin.open("src/meshes/mesh26.mesh",ios::in);
- //fin.open("src/meshes/prueba03.mesh",ios::in);
+ fin.open("src/meshes/prueba02.mesh",ios::in);//mesh2-26/prueba00-02
 
  //First Line OFF
  string name;
@@ -77,9 +79,8 @@ void readMeshFiles(){
 
 			 fin>>a>>b>>c;
 
-			 cout<<"puntos "<<i+1<<": "<<endl;
-			 cout<<a<<" "<<b<<" "<<c<<'\n';
-
+			/* cout<<"puntos "<<i+1<<": "<<endl;
+			 cout<<a<<" "<<b<<" "<<c<<'\n';*/
 			 vertexList[3*i]=a/2;
 						vertexList[3*i+1]=b/2;
 								   vertexList[3*i+2]=c/2;
@@ -110,24 +111,21 @@ void readMeshFiles(){
 
 
 void init (GLFWwindow* window) {
+
+
+
 	renderingProgram = Utils::createShaderProgram("src/vertShader.glsl", "src/fragShader.glsl");
     // Create Vertex Array Object
 	GLuint m_VAO;
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
 
+
+
     // Create a Vertex Buffer Object and copy the vertex data to it
     GLuint m_VBO;
     glGenBuffers(1, &m_VBO);
-	/*m_Vertices = new GLfloat[20] {
-        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
-	};*/
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	// Reserva memoria na GPU para um TARGET receber dados
-	// Copia esses dados pra essa área de memoria
 	glBufferData(
 			GL_ARRAY_BUFFER,	// TARGET associado ao nosso buffer
 			3*CT->getNumberVertices()*sizeof(double),//20 * sizeof(GLfloat),	// tamanho do buffer
@@ -148,6 +146,7 @@ void init (GLFWwindow* window) {
 			(void*)CT->getTriangleList(),//elements,
 			GL_STATIC_DRAW);
 
+
 	// Specify the layout of the vertex data
 	GLint posAttrib = glGetAttribLocation(renderingProgram, "iPosition");
 	glEnableVertexAttribArray(posAttrib);
@@ -162,16 +161,62 @@ void init (GLFWwindow* window) {
 
 
 
-/*
-	GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(
-			colAttrib,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			5 * sizeof(GLfloat),
-			(void*) (2 * sizeof(GLfloat)));*/
+
+
+
+
+
+	///////////////////////////////////////////////////////////////////////////////17*3=51
+
+
+
+		int cantT=CT->getNumTriangles();//cantidad de triangulos
+		cout<<cantT*3<<endl;
+
+		float num1=0.0,num2=0.0,num3=0.0;
+		srand((unsigned)time(NULL));//semilla
+
+			// Un color para cada vértice. Se generaron aleatoriamente.
+			 GLfloat g_color_buffer_data[cantT*3*3];
+			for (int v = 0; v < cantT*3 ;++v){
+				glClear(GL_COLOR_BUFFER_BIT);
+				if(v%3==0){
+					num1=(float)(rand() % 30)/30;//10 un decimal, 20 dos decimales....
+					num2=(float)(rand() % 30)/30;
+					num3=(float)(rand() % 30)/30;
+					cout<<endl;
+				}
+
+				g_color_buffer_data[3*v+0] =num1;
+			    g_color_buffer_data[3*v+1]  =num2;
+			    g_color_buffer_data[3*v+2] =num3;
+			    cout<<v<<"  "<<"  "<<num1<<"  "<<num2<<"  "<<num3<<endl;
+			}
+
+
+		GLuint colorbuffer;
+		glGenBuffers(1, &colorbuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+
+
+
+		GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
+		glEnableVertexAttribArray(colAttrib);
+		glVertexAttribPointer(
+				colAttrib,
+				3,
+				GL_FLOAT,
+				GL_FALSE,
+				0,
+				(void*) 0
+				);
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 }
 
 void display(GLFWwindow* window, double currentTime) {
@@ -186,6 +231,9 @@ void display(GLFWwindow* window, double currentTime) {
     //GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP,GL_TRIANGLES
    glPointSize(2.0f);
    glDrawElements(GL_TRIANGLES, CT->getNumTriangles()*3, GL_UNSIGNED_INT, 0);
+
+
+
 
 }
 
