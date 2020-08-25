@@ -52,7 +52,7 @@ void matrizAdyacencia();
 void readMeshFiles() {
 
 	ifstream fin;
-	fin.open("src/meshes/mesh3.mesh", ios::in);
+	fin.open("src/meshes/mesh2.mesh", ios::in);
 
 	//First Line OFF
 	string name;
@@ -149,6 +149,7 @@ void matrizAdyacencia() {
 	cout<<endl;
 	aD.dijkstra(inicial);
 
+	//camino de triangulos
 
 	int i=0;
 	int cant=aD.camino.size();
@@ -156,6 +157,10 @@ void matrizAdyacencia() {
 		cout<<" "<<aD.camino[i];
 		i++;
 	}
+
+	//vertices de los triangulos
+
+	CT->cornerToVertexIndex(aD.camino[i]-1);
 
 }
 
@@ -206,9 +211,10 @@ void init(GLFWwindow *window) {
 			float num1=0.0,num2=0.0,num3=0.0;
 			srand((unsigned)time(NULL));//semilla
 
-				// Un color para cada vértice. Se generaron aleatoriamente.
-				 GLfloat g_color_buffer_data[cantT*3*3];
-				for (int v = 0; v < cantT*3 ;++v){
+			// Un color para cada vértice. Se generaron aleatoriamente.
+			 GLfloat g_color_buffer_data[cantT*3*3];
+
+			 for (int v = 0; v < cantT*3 ;++v){
 
 					if(v%3==0){
 						num1=(float)(rand() % 30)/30;//10 un decimal, 20 dos decimales....
