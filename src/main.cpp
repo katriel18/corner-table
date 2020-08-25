@@ -54,7 +54,7 @@ void readMeshFiles(){
 
  ifstream fin;
 
- fin.open("src/meshes/prueba02.mesh",ios::in);//mesh2-26/prueba00-02
+ fin.open("src/meshes/mesh8.mesh",ios::in);//mesh2-26/prueba00-02
 
  //First Line OFF
  string name;
@@ -159,13 +159,6 @@ void init (GLFWwindow* window) {
 			(void*) 0 //0
 			);
 
-
-
-
-
-
-
-
 	///////////////////////////////////////////////////////////////////////////////17*3=51
 
 
@@ -184,13 +177,13 @@ void init (GLFWwindow* window) {
 					num1=(float)(rand() % 30)/30;//10 un decimal, 20 dos decimales....
 					num2=(float)(rand() % 30)/30;
 					num3=(float)(rand() % 30)/30;
-					cout<<endl;
+					//cout<<endl;
 				}
 
 				g_color_buffer_data[3*v+0] =num1;
 			    g_color_buffer_data[3*v+1]  =num2;
 			    g_color_buffer_data[3*v+2] =num3;
-			    cout<<v<<"  "<<"  "<<num1<<"  "<<num2<<"  "<<num3<<endl;
+			    //cout<<v<<"  "<<"  "<<num1<<"  "<<num2<<"  "<<num3<<endl;
 			}
 
 
