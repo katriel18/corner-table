@@ -25,7 +25,9 @@ public:
 	int V;                     //numero de vertices
 	int previo[ MAX];
 
-	//para la impresion de caminos
+	vector<int> camino; //lista de triangulos
+
+//para la impresion de caminos
 
 //función de inicialización
 	void init1() {
@@ -50,11 +52,9 @@ public:
 	void print(int destino) {
 		if (previo[destino] != -1)    //si aun poseo un vertice previo
 			print(previo[destino]);  //recursivamente sigo explorando
-		cout << destino<<" "; //printf("%d " , destino ); //terminada la recursion imprimo los vertices recorridos
+		//cout << destino<<" "; //printf("%d " , destino ); //terminada la recursion imprimo los vertices recorridos
 
-
-
-
+		camino.push_back(destino);
 
 	}
 

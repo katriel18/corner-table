@@ -52,7 +52,7 @@ void matrizAdyacencia();
 void readMeshFiles() {
 
 	ifstream fin;
-	fin.open("src/meshes/mesh15.mesh", ios::in);
+	fin.open("src/meshes/mesh3.mesh", ios::in);
 
 	//First Line OFF
 	string name;
@@ -150,6 +150,13 @@ void matrizAdyacencia() {
 	aD.dijkstra(inicial);
 
 
+	int i=0;
+	int cant=aD.camino.size();
+	while(i<cant){
+		cout<<" "<<aD.camino[i];
+		i++;
+	}
+
 }
 
 void init(GLFWwindow *window) {
@@ -194,7 +201,7 @@ void init(GLFWwindow *window) {
 
 
 			int cantT=CT->getNumTriangles();//cantidad de triangulos
-			cout<<cantT*3<<endl;
+			//cout<<cantT*3<<endl;
 
 			float num1=0.0,num2=0.0,num3=0.0;
 			srand((unsigned)time(NULL));//semilla
