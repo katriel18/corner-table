@@ -8,6 +8,10 @@
 #include <stdlib.h>
 #include <iostream>
 
+//libreria para aleatorios
+#include <time.h>//////////////////////////////////
+
+
 // Include GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -48,7 +52,7 @@ void matrizAdyacencia();
 void readMeshFiles() {
 
 	ifstream fin;
-	fin.open("src/meshes/mesh3.mesh", ios::in);
+	fin.open("src/meshes/mesh15.mesh", ios::in);
 
 	//First Line OFF
 	string name;
@@ -104,7 +108,7 @@ void matrizAdyacencia() {
 	aD.V = CT->getNumTriangles();
 
 	cout << "Num Triangles: " << CT->getNumTriangles() << endl;
-	CT->printTriangleList();
+	//CT->printTriangleList();
 
 	int matrizTriangle[CT->getNumTriangles()][CT->getNumTriangles()];
 	for (unsigned int m = 0; m < CT->getNumTriangles(); m++) {
@@ -116,8 +120,8 @@ void matrizAdyacencia() {
 	for (unsigned int i = 0; i < CT->getNumTriangles() * 3; i++) {
 		CornerType triangleRigth = CT->cornerTriangle(CT->cornerRight(i));
 		if (triangleRigth <= CT->getNumTriangles()) {
-			cout << "T " << CT->cornerTriangle(i) << "Tizq" << triangleRigth
-					<< endl;
+			//cout << "T " << CT->cornerTriangle(i) << "Tizq" << triangleRigth<< endl;
+
 			matrizTriangle[CT->cornerTriangle(i)][triangleRigth] = 1;
 
 		}
@@ -159,12 +163,7 @@ void init(GLFWwindow *window) {
 	// Create a Vertex Buffer Object and copy the vertex data to it
 	GLuint m_VBO;
 	glGenBuffers(1, &m_VBO);
-	/*m_Vertices = new GLfloat[20] {
-	 -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
-	 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
-	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
-	 -0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
-	 };*/
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	// Reserva memoria na GPU para um TARGET receber dados
 	// Copia esses dados pra essa área de memoria
@@ -191,16 +190,55 @@ void init(GLFWwindow *window) {
 			(void*) 0 //0
 			);
 
-	/*
-	 GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
-	 glEnableVertexAttribArray(colAttrib);
-	 glVertexAttribPointer(
-	 colAttrib,
-	 3,
-	 GL_FLOAT,
-	 GL_FALSE,
-	 5 * sizeof(GLfloat),
-	 (void*) (2 * sizeof(GLfloat)));*/
+	///////////////////////////////////////////////////////////////////////////////17*3=51
+
+
+			int cantT=CT->getNumTriangles();//cantidad de triangulos
+			cout<<cantT*3<<endl;
+
+			float num1=0.0,num2=0.0,num3=0.0;
+			srand((unsigned)time(NULL));//semilla
+
+				// Un color para cada vértice. Se generaron aleatoriamente.
+				 GLfloat g_color_buffer_data[cantT*3*3];
+				for (int v = 0; v < cantT*3 ;++v){
+
+					if(v%3==0){
+						num1=(float)(rand() % 30)/30;//10 un decimal, 20 dos decimales....
+						num2=(float)(rand() % 30)/30;
+						num3=(float)(rand() % 30)/30;
+						//cout<<endl;
+					}
+
+					g_color_buffer_data[3*v+0] =num1;
+				    g_color_buffer_data[3*v+1]  =num2;
+				    g_color_buffer_data[3*v+2] =num3;
+				   // cout<<v<<"  "<<"  "<<num1<<"  "<<num2<<"  "<<num3<<endl;
+				}
+
+
+			GLuint colorbuffer;
+			glGenBuffers(1, &colorbuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+
+
+
+			GLint colAttrib = glGetAttribLocation(renderingProgram, "iColor");
+			glEnableVertexAttribArray(colAttrib);
+			glVertexAttribPointer(
+					colAttrib,
+					3,
+					GL_FLOAT,
+					GL_FALSE,
+					0,
+					(void*) 0
+					);
+
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 }
 
 void display(GLFWwindow *window, double currentTime) {
@@ -236,10 +274,10 @@ int main(void) {
 	glfwSwapInterval(1);
 
 	readMeshFiles();
-
+	matrizAdyacencia();
 	init(window);
 
-	matrizAdyacencia();
+
 
 	while (!glfwWindowShouldClose(window)) {
 
