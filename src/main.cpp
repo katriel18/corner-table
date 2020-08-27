@@ -54,7 +54,8 @@ void readMeshFiles(){
 
  ifstream fin;
 
- fin.open("src/meshes/mesh8.mesh",ios::in);//mesh2-26/prueba00-02
+ //probar 10 20 24 26
+ fin.open("src/meshes/mesh22.mesh",ios::in);//mesh2-26/prueba00-02//max 21
 
  //First Line OFF
  string name;
